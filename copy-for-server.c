@@ -24,7 +24,6 @@ void err_sys(const char *message)
         exit(1);
 }
 
-
 void check(int return_val, const char *msg)
 {
 	if (return_val < 0) err_sys(msg);
@@ -117,10 +116,10 @@ void dump_buffer(char* buffer_name, char* buffer, size_t buffer_length)
 
 int main(int argc, char** argv)
 {
-	//if (argc < 2){
-	//	fprintf(stderr, "usage: ./main <message>\n");
-	//	exit(1);
-	//}
+	if (argc < 2){
+		fprintf(stderr, "usage: ./main ADDRESS\n");
+		exit(1);
+	}
 //	struct aes256_ctx ctx;
 //	char key[AES256_KEY_SIZE] = {0};
 //	((long*)key)[0] = (long)0xdeadfeedbad; //assuming key larger than a long
@@ -134,7 +133,7 @@ int main(int argc, char** argv)
 //	send_secure_message(message, AES_BLOCK_SIZE*2, &ctx);
 //
 	int our_sockfd;
-	if ( (our_sockfd = connect_to_server("10.60.5.186", "9999")) > 0){
+	if ( (our_sockfd = connect_to_server(argv[1], "9999")) > 0){
 		printf("\nMade connection (as connector).\n");
 		char message[] = "hello from connector.\n";
 		write(our_sockfd, message, sizeof(message));
